@@ -54,6 +54,7 @@ function makeHtmlBoard() {
       // y- vertical is first, x-horizontal is second
       cell.setAttribute("id", `${y}-${x}`);
       row.append(cell);
+      //document.getElementById(`${y}-${x}`).innerHTML(`${y}-${x}`);
     }
     htmlBoard.append(row);
   }
@@ -63,6 +64,13 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
+  let y = null;
+  for (let i = HEIGHT - 1; i >= 0; i--) {
+    if (!board[i][x]) {
+      y = i;
+      return y;
+    }
+  }
   //seperate cooradinates
   //find y with available space
   //if not return y = null
@@ -73,12 +81,17 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  const pieceDiv = document.createElement("div");
+  pieceDiv.setAttribute('class', `piece p${currPlayer}`);
+  let boardCell = document.getElementById(`${y}-${x}`);
+  boardCell.append(pieceDiv);
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -97,7 +110,9 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
-  //change a css class??
+  board[y][x] = currPlayer;
+
+
   placeInTable(y, x);
 
 
@@ -108,9 +123,13 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  if (isBoardFull()) {
+    return endGame(`There is a tie!`);
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -145,6 +164,15 @@ function checkForWin() {
       }
     }
   }
+}
+
+function isBoardFull() {
+  for (let i = 0; i < board.length; i++) {
+    if (!board[i].every((val) => val)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 makeBoard();
