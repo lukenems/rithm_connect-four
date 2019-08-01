@@ -9,7 +9,7 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
-const board = []; // array of rows, each row is array of cells  (board[y][x])
+let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
@@ -54,7 +54,6 @@ function makeHtmlBoard() {
       // y- vertical is first, x-horizontal is second
       cell.setAttribute("id", `${y}-${x}`);
       row.append(cell);
-      //document.getElementById(`${y}-${x}`).innerHTML(`${y}-${x}`);
     }
     htmlBoard.append(row);
   }
@@ -68,7 +67,7 @@ function findSpotForCol(x) {
   for (let i = HEIGHT - 1; i >= 0; i--) {
     if (!board[i][x]) {
       y = i;
-      return y;
+      break;
     }
   }
   //seperate cooradinates
@@ -82,7 +81,7 @@ function findSpotForCol(x) {
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   const pieceDiv = document.createElement("div");
-  pieceDiv.setAttribute('class', `piece p${currPlayer}`);
+  pieceDiv.classList.add(`piece`, `p${currPlayer}`);
   let boardCell = document.getElementById(`${y}-${x}`);
   boardCell.append(pieceDiv);
 }
@@ -92,6 +91,10 @@ function placeInTable(y, x) {
 function endGame(msg) {
   // TODO: pop up alert message
   alert(msg);
+  //reset game code
+  setTimeout(() => {
+    resetGame()
+  }, 2000);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -129,7 +132,7 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
-  currPlayer === 1 ? currPlayer = 2 : currPlayer = 1;
+  currPlayer = (currPlayer === 1) ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -173,6 +176,22 @@ function isBoardFull() {
     }
   }
   return true;
+}
+
+function resetGame() {
+  board = [];
+  makeBoard();
+  clearHTMLBoard();
+  makeHtmlBoard();
+}
+
+function clearHTMLBoard() {
+  let board = document.getElementById('board');
+  let child = board.lastElementChild;
+  while (child) {
+    board.removeChild(child);
+    child = board.lastElementChild;
+  }
 }
 
 makeBoard();
