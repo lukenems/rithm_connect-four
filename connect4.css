@@ -45,9 +45,15 @@ button {
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
+  border-radius: 50%;
   border: dashed 1px lightgray;
 }
 
-#column-top td:hover {
-  background-color: gold;
+#column-top .p1token:hover {
+  background-color: #ff0000;
 }
+
+#column-top .p2token:hover {
+  background-color: #0000ff;
+}
+
