@@ -40,6 +40,7 @@ function makeHtmlBoard() {
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
     headCell.setAttribute("id", x);
+    headCell.classList.add('p1token')
     top.append(headCell);
   }
   htmlBoard.append(top);
@@ -132,7 +133,16 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  let topRow = document.querySelectorAll(`.p${currPlayer}token`);
   currPlayer = (currPlayer === 1) ? 2 : 1;
+
+  //switch top row token color
+  console.log(topRow)
+  for (let i = 0; i < topRow.length; i++) {
+    topRow[i].classList.remove(`p1token`, `p2token`);
+    topRow[i].classList.add(`p${currPlayer}token`);
+  }
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
