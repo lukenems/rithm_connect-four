@@ -27,11 +27,11 @@ button {
 .piece {
   /* TODO: make into circles */
   margin: auto;
-  width: 80%;
-  height: 80%;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border-style: double;
-  border-width: 5px;
+  border-width: 10px;
 }
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
@@ -51,9 +51,17 @@ button {
 
 #column-top .p1token:hover {
   background-color: #ff0000;
+  margin: auto;
+  width: 32px;
+  height: 30px;
+  border: double 10px #000;
 }
 
 #column-top .p2token:hover {
   background-color: #0000ff;
+  margin: auto;
+  width: 32px;
+  height: 30px;
+  border: double 10px #000;
 }
 
