@@ -190,6 +190,7 @@ function isBoardFull() {
 
 function resetGame() {
   board = [];
+  currPlayer = 1;
   makeBoard();
   clearHTMLBoard();
   makeHtmlBoard();
